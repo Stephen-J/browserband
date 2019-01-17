@@ -1,0 +1,170 @@
+<html>
+    <head></head>
+    <body style="margin:0px;padding:0px;width:100%;height:100%;background-color: white;">
+            <div id="AngbandContainer" style="margin:0px;width:100%;height:100%;" tabindex="0" onkeydown="AngbandModule.onKeydown(event)" onkeypress="AngbandModule.onKeypress(event)">
+                <div style="padding:100px 0px;margin:auto" id="loading">
+                    <image style="display:block;margin:auto" src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Angband.svg"></image>
+                    <div style="font-weight:bold;font-size:50px;width:100%;height:100%;text-align:center">Angband Module Loading</div>
+                </div>
+                <div style="width:100%;height:10%"></div>
+                <canvas id="AngbandCanvas" style="margin:auto;display:none;padding : 0px;background-color : black;">
+            </div>
+            <script>var AngbandModule = {
+                fontSize : 23,
+                fontWidth : 0,
+                lines : 24,
+                columns : 80,
+                keyPress : 0,
+                onKeydown : function(e){
+                    switch(e.keyCode){
+                        case 8: //backspace
+                        case 9: //tab
+                        case 13: //enter
+                        case 27: //escape
+                        case 37: //left arrow
+                        case 38: //up arrow
+                        case 39: //right arrow
+                        case 40: // down arrow
+                        case 46: // delete
+                        case 190: //period
+                            _keypress(e.keyCode);
+                            break;
+                    }
+
+                },
+                onKeypress : function(e){
+                    _keypress(e.keyCode);
+                },
+                TermExtraClear : function(){
+                    var canvas = document.getElementById("AngbandCanvas");
+                    var ctx = canvas.getContext("2d");
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                },
+                TermInitJsm : function(){
+                    document.body.style = "margin:0px;padding:0px;width:100%;height:100%;background-color: black;";
+                    var angbandContainer = document.getElementById("AngbandContainer");
+                    angbandContainer.removeChild(document.getElementById("loading"));  
+                    var canvas = document.getElementById("AngbandCanvas");
+                    var ctx = document.getElementById("AngbandCanvas").getContext("2d");
+                    ctx.font = this.fontSize + 'px Courier';
+                    this.fontWidth =  ctx.measureText("A").width;
+                    canvas.height = this.lines * this.fontSize;
+                    canvas.width = this.columns * this.fontWidth;
+                    ctx.font = this.fontSize + 'px Courier';
+                    ctx.fillStyle = 'white';
+                    ctx.textBaseline = "bottom";
+                    ctx.strokeStyle = 'white';
+                    canvas.style = "margin:auto;display:block;padding : 0px;background-color : black;";
+                },
+                TermPictJsm : function(x,y,n,cp,ap,tc){
+                    var ctx = document.getElementById("AngbandCanvas").getContext("2d");
+                    //ctx.fillStyle = 'black';
+                    //ctx.fillStyle = 'white';
+                    for(i = 0 ; i < n ; i++){
+                        c = String.fromCharCode(cp[i]);
+                        charX = this.fontWidth * (x + i);
+                        charY = (y + 1) * this.fontSize;
+                        clearX = charX;
+                        clearY = y * this.fontSize - 1;
+                        ctx.clearRect(clearX,clearY,this.fontWidth,this.fontSize);
+                        switch(ap[i]){
+                            case 1 :
+                                ctx.fillStyle = 'white';
+                                break;
+                            case 2 :
+                                ctx.fillStyle = 'slategrey';
+                                break;
+                            case 3 :
+                                ctx.fillStyle = 'orange';
+                                break;
+                            case 4 :
+                                ctx.fillStyle = 'red';
+                                break;
+                            case 5 :
+                                ctx.fillStyle = 'green';
+                                break;
+                            case 6 :
+                                ctx.fillStyle = 'blue';
+                                break;
+                            case 7 :
+                                ctx.fillStyle = 'brown';
+                                break;
+                            case 8 :
+                                ctx.fillStyle = "gray";
+                                break;
+                            case 9 :
+                                ctx.fillStyle = "aliceblue"
+                                break;
+                            case 10 :
+                                ctx.fillStyle = "mediumpurple";
+                                break;
+                            case 11:
+                                ctx.fillStyle = 'yellow';
+                                break;
+                            case 12:
+                                ctx.fillStyle = "crimson";
+                                break;
+                            case 13 :
+                                ctx.fillStyle = 'lightgreen';
+                                break;
+                            case 14 :
+                                ctx.fillStyle = 'cyan';
+                                break;
+                            case 15 :
+                                ctx.fillStyle = 'lightcoral';
+                                break;
+                            case 16 :
+                                ctx.fillStyle = 'purple';
+                                break;
+                            case 17 :
+                                ctx.fillStyle = "violet";
+                                break;
+                            case 18 :
+                                ctx.fillStyle = "teal";
+                                break;
+                            case 19 :
+                                ctx.fillStyle = 'burlywood';
+                                break;
+                            case 20 :
+                                ctx.fillStyle = "lightyellow";
+                                break;
+                            case 21 :
+                                ctx.fillStyle = "magenta";
+                                break;
+                            case 22 :
+                                ctx.fillStyle = "aquamarine";
+                                break;
+                            case 23 :
+                                ctx.fillStyle = "palevioletred";
+                                break;
+                            case 24 :
+                                ctx.fillStyle = "lightpink";
+                                break;
+                            case 25 :
+                                ctx.fillStyle = "gold";
+                                break;
+                            case 26 :
+                                ctx.fillStyle = "slateblue";
+                                break;
+                            case 27 :
+                                ctx.fillStyle = "midnightblue";
+                                break;
+                            default:
+                                ctx.fillStyle = "white";
+                        }
+                        ctx.fillText(c,charX,charY);
+                    }
+                },
+                TermCursJsm : function(x,y){
+                    var ctx = document.getElementById("AngbandCanvas").getContext("2d");
+                    ctx.fillStyle = "white";
+                    ctx.lineWidth = 2;
+                    cursX = x * this.fontWidth + 1;
+                    cursY = y * this.fontSize;
+                    ctx.strokeRect(cursX,cursY,this.fontWidth - 2,this.fontSize - 2);
+                }
+            };</script>
+            <script>document.getElementById('AngbandContainer').focus()</script>
+            <script src="main.js"></script>
+    </body>
+</html>
