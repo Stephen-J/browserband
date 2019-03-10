@@ -1,3 +1,0 @@
-[submodule "angband"]
-	path = angband
-	url = git@github.com:angband/angband.git
