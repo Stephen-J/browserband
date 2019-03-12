@@ -1,0 +1,7 @@
+
+ group("all") {
+    deps = [
+      "//src/angband:angband_worker",
+      "//src/angband:angband_main"
+    ]
+  }

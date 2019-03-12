@@ -312,6 +312,7 @@ static void debug_opt(const char *arg) {
  */
 int main(int argc, char *argv[])
 {
+
 	int i;
 
 	bool done = false;

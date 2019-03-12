@@ -47,6 +47,7 @@ void cback(char* data, int size, void* arg) {
     switch(data[0]){
         case 1 : 
             EM_ASM(
+                console.log("TermInitJsm");
                 AngbandModule.TermInitJsm();
                 );
             break;
@@ -128,10 +129,11 @@ void cback(char* data, int size, void* arg) {
     }
 }
 
-EMSCRIPTEN_KEEPALIVE void start_band_worker(char *angbandModule {
+EMSCRIPTEN_KEEPALIVE void start_band_worker(char *angbandModule){
     EM_ASM_({
+        console.log("This is a test");
         console.log(Pointer_stringify($0));
-    },data);
+    },angbandModule);
     int hasAngband = EM_ASM_INT({
         var hasAngband = 1;
         try{
@@ -144,7 +146,7 @@ EMSCRIPTEN_KEEPALIVE void start_band_worker(char *angbandModule {
     });
 
     if(hasAngband){
-        worker = emscripten_create_worker(angbandModule);
+        worker = emscripten_create_worker("angband_worker.js");
         emscripten_call_worker(worker, "start", 0, 0, cback, (void*)42);
     }
     //return 0;

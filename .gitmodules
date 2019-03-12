@@ -1,3 +1,3 @@
 [submodule "angband"]
-	path = angband
+	path = bands/angband
 	url = https://github.com/angband/angband.git

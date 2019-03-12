@@ -166,6 +166,9 @@ static void Term_init_jsm(term *t)
 	term_data *td = (term_data*)(t->data);
 	char data[1] ;
 	data[0] = 1;
+	EM_ASM(
+		console.log("Term Init");
+	);
 	emscripten_worker_respond_provisionally(data,1);
 	//emscripten_worker_respond_provisionally("{function : \"TermInitJsm\"}",26);
 }
@@ -232,7 +235,7 @@ static errr Term_xtra_jsm(int n, int v)
 			 */
 				//char data[1];
 				//data[0] = 3;
-				
+				EM_ASM(console.log("Term Extra Event"));
 				if(v){
 					while(keyCode == 0){
 						emscripten_sleep(10);
@@ -750,9 +753,30 @@ errr init_jsm(int argc, char **argv)
 
 int main(int argc,char *argv[]);
 EMSCRIPTEN_KEEPALIVE void start(char* data,int size)
-{
-	char *argv[0];
-	main(0,argv);
+{	
+	EM_ASM(
+		FS.mkdir("/home/web_user/angband");
+		FS.mount(IDBFS, {}, "/home/web_user/angband");
+		FS.syncfs(true, function (err) {
+			if(!FS.analyzePath("/home/web_user/angband/info").exists){
+				FS.mkdir("/home/web_user/angband/info");
+			}
+			if(!FS.analyzePath("/home/web_user/angband/scores").exists){
+				FS.mkdir("/home/web_user/angband/scores");
+			}
+			if(!FS.analyzePath("/home/web_user/angband/save").exists){
+				FS.mkdir("/home/web_user/angband/save");
+			}
+		});
+	);
+	char *argv[5]= {
+		"angband",
+		"-duser=/home/web_user/angband",
+		"-dinfo=/home/web_user/angband/info",
+		"-dscores=/home/web_user/angband/scores",
+		"-dsave=/home/web_user/angband/save"
+	};
+	main(5,argv);
 }
 
 #endif /* USE_JSM*/
