@@ -16,12 +16,15 @@ web files
 1. **Requirements**
     * gn build tool - [gn](https://gn.googlesource.com/gn/)
     * dart sdk - [sdk](https://www.dartlang.org/tools/sdk)
-    * ninja build tool - [ninja](https://ninja-build.org/) 
+    * ninja build tool - [ninja](https://ninja-build.org/)
+    * emscripten - [emscripten](https://emscripten.org/)
 2. **Building**
-    1. be in project root
-    2. gn gen out/browserband
-    3. cd out/browserband
-    4. ninja
+    * **Linux**
+        1. source emsdk_env.sh
+        2. be in project root
+        3. gn gen out/browserband
+        4. cd out/browserband
+        5. ninja
 3. **running**
     1. copy files from out/browserband and web into another directory
     2. serve the files created in step 1
