@@ -6,7 +6,7 @@ config("angband_worker_config"){
     customize_path = rebase_path("//bands/angband/lib/customize",".")
     gamedata_path = rebase_path("//bands/angband/lib/gamedata",".")
     user_path = rebase_path("//bands/angband/lib/user",".")
-    pre_js_path = rebase_path("pre.js")
+    whitelist_items = exec_script("//build/scripts/convert_whitelist.dart",[rebase_path("whitelist",root_build_dir)],"list lines")
     include_dirs  = ["//bands/angband/src","."]
     
     cflags = [
@@ -19,13 +19,12 @@ config("angband_worker_config"){
         "-s" , "EXIT_RUNTIME=1",
         "-s" , "FORCE_FILESYSTEM=1",
         "-s" , "BUILD_AS_WORKER=1",
-        "-s" ,"ASSERTIONS=1",
+         "-s","EMTERPRETIFY_WHITELIST=${whitelist_items}",
         "--preload-file" , "${help_path}@/lib/help",
         "--preload-file" ,  "${screens_path}@/lib/screens",
         "--preload-file",  "${customize_path}@/lib/customize",
         "--preload-file",  "${gamedata_path}@/lib/gamedata",
-        "--preload-file" , "${user_path}@/lib/user",
-        "--pre-js" , "${pre_js_path}"
+        "--preload-file" , "${user_path}@/lib/user"
     ]
     defines = [
         "USE_JSM"
