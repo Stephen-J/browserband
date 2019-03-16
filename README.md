@@ -1,7 +1,11 @@
 an experiment to get angband variants running locally in the browser.  
 
-## Project Layout
+#### Note : this is a work in progress , still setting up
 
+
+## Project Layout
+###### /bin
+dart tools for development
 ###### /bands
 submodules for angband variants
 ###### /build
@@ -25,8 +29,11 @@ web files
         3. gn gen out/browserband
         4. cd out/browserband
         5. ninja
+    * **Windows**
+        * not supported yet
 3. **running**
-    1. copy files from out/browserband and web into another directory
-    2. serve the files created in step 1
-    3. open up a browser and goto http://localhost:8080/angband.html
+    * **Linux**
+        1. dart bin/dev_server.dart
+    * **Windows**
+        * not supported yet
 
