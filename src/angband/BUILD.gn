@@ -1,14 +1,22 @@
 import("//build/bands/angband.gni")
 
+browserband_angfiles = angfiles
+browserband_angfiles -= ["//bands/angband/src/ui-signals.c"]
+browserband_angfiles += ["fromSubmodule/ui-signals.c","fromSubmodule/main.c","main-jsm.c"]
+browserband_source = browserband_angfiles + zfiles
+
+angband_include_dirs  = ["//bands/angband/src","."]
+
+screens_path = rebase_path("//bands/angband/lib/screens",".")
+help_path = rebase_path("//bands/angband/lib/help",".")
+customize_path = rebase_path("//bands/angband/lib/customize",".")
+gamedata_path = rebase_path("//bands/angband/lib/gamedata",".")
+user_path = rebase_path("//bands/angband/lib/user",".")
+whitelist_items = exec_script("//build/scripts/convert_whitelist.dart",[rebase_path("whitelist",root_build_dir)],"list lines")
+
+
 config("angband_worker_config"){
-    screens_path = rebase_path("//bands/angband/lib/screens",".")
-    help_path = rebase_path("//bands/angband/lib/help",".")
-    customize_path = rebase_path("//bands/angband/lib/customize",".")
-    gamedata_path = rebase_path("//bands/angband/lib/gamedata",".")
-    user_path = rebase_path("//bands/angband/lib/user",".")
-    whitelist_items = exec_script("//build/scripts/convert_whitelist.dart",[rebase_path("whitelist",root_build_dir)],"list lines")
-    include_dirs  = ["//bands/angband/src","."]
-    
+    include_dirs = angband_include_dirs
     cflags = [
         "-O3"
     ]
@@ -31,16 +39,9 @@ config("angband_worker_config"){
     ]
 }
 
-
-angfiles -= ["//bands/angband/src/ui-signals.c"]
-angfiles += ["fromSubmodule/ui-signals.c"]
-
 executable("angband_worker"){
     configs = [":angband_worker_config"]
-    sources = angfiles + zfiles + [
-        "main-jsm.c",
-        "fromSubmodule/main.c"
-    ] 
+    sources = browserband_source
 }
 
 config("angband_main_config"){
