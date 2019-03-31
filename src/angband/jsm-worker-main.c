@@ -130,10 +130,6 @@ void cback(char* data, int size, void* arg) {
 }
 
 EMSCRIPTEN_KEEPALIVE void start_band_worker(char *angbandModule){
-    EM_ASM_({
-        console.log("This is a test");
-        console.log(Pointer_stringify($0));
-    },angbandModule);
     int hasAngband = EM_ASM_INT({
         var hasAngband = 1;
         try{

@@ -3,7 +3,12 @@ import("//build/bands/angband.gni")
 browserband_angfiles = angfiles
 browserband_angfiles -= ["//bands/angband/src/ui-signals.c"]
 browserband_angfiles += ["fromSubmodule/ui-signals.c","fromSubmodule/main.c","main-jsm.c"]
-browserband_source = browserband_angfiles + zfiles
+
+browserband_zfiles = zfiles
+browserband_zfiles -= ["//bands/angband/src/z-file.c"]
+browserband_zfiles += ["fromSubmodule/z-file.c"]
+
+browserband_source = browserband_angfiles + browserband_zfiles
 
 angband_include_dirs  = ["//bands/angband/src","."]
 
