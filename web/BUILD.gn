@@ -1,0 +1,4 @@
+copy("build_web") {
+    sources = ["angband/angband.html"]
+    outputs = ["$root_build_dir/{{source_root_relative_dir}}/{{source_file_part}}"]
+}

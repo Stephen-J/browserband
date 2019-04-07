@@ -1,0 +1,4 @@
+copy("build_bin") {
+    sources = [ "dev_server.dart" ]
+    outputs = [ "$root_build_dir/{{source_file_part}}" ]
+}

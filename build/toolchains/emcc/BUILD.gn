@@ -10,7 +10,7 @@ toolchain("emcc"){
         command = "emcc  {{ldflags}} {{inputs}} -o {{output}}"
         description = "LINK  {{ldflags}} {{inputs}} -o {{output}}.js"
         outputs = [
-            "{{target_output_name}}.js"
+            "{{target_out_dir}}/{{target_output_name}}.js"
           ]
     }
     

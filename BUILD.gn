@@ -1,7 +1,8 @@
-
- group("all") {
+group("all") {
     deps = [
       "//src/angband:angband_worker",
-      "//src/angband:angband_main"
+      "//src/angband:angband_main",
+      "//build/bin:build_bin",
+      "//web:build_web"
     ]
   }

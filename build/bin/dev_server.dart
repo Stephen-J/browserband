@@ -9,11 +9,12 @@ void main(List<String> args) async{
   print('Listening on localhost:${server.port}');
 
   await for (HttpRequest request in server) {
+    print("Request Received -> ${request.requestedUri}");
     File toServe = null;
     if(request.uri.path == "/"){
       toServe = File("web/angband/angband.html");
     }else{
-      Directory buildDir = Directory("out/browserband");
+      Directory buildDir = Directory("obj/src/angband");
       String filename = request.uri.pathSegments.last;
       toServe = File("${buildDir.path}/${filename}");
     }
